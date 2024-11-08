@@ -1,6 +1,8 @@
 package scenarioTest;
 
 import personnages.Gaulois;
+import produits.Poisson;
+import produits.Sanglier;
 import villagegaulois.Etal;
 
 public class Scenario {
@@ -36,14 +38,9 @@ public class Scenario {
 
 		System.out.println(village);
 
-		DepenseMarchand[] depense = village.acheterProduit("sanglier", 3);
-
-		for (int i = 0; i < depense.length && depense[i] != null; i++) {
-			System.out.println(depense[i]);
-		}
+		village.acheterProduit("sanglier", 3);
 
 		System.out.println(village);
-
 	}
 
 }
