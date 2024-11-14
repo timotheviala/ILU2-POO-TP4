@@ -1,30 +1,26 @@
 package villagegaulois;
 
 import personnages.Gaulois;
+import produits.Produit;
 
-public class Etal {
+public class Etal <P extends Produit> {
 	private Gaulois vendeur;
-	private String produit;
-	private int quantiteDebutMarche;
-	private int quantite;
-	private boolean etalOccupe = false;
+	private P[] produits;
+	private int nbProduit;
+	private int prix;
 
-	public boolean isEtalOccupe() {
-		return etalOccupe;
-	}
 
 	public Gaulois getVendeur() {
 		return vendeur;
 	}
 
-	public int getQuantite() {
-		return quantite;
+	public void installerVendeur(Gaulois vendeur,P[] produit,int prix) {
+		this.vendeur=vendeur;
+		this.prix=prix;
+		this.nbProduit=produit.length;
+		this.produits=produit;
 	}
-
-	public String getProduit() {
-		return produit;
-	}
-
+	
 	public void occuperEtal(Gaulois vendeur, String produit, int quantite) {
 		this.vendeur = vendeur;
 		this.produit = produit;
@@ -33,8 +29,14 @@ public class Etal {
 		etalOccupe = true;
 	}
 
-	public boolean contientProduit(String produit) {
-		return this.produit.equals(produit);
+	@Override
+	public int contientProduit(String produit,int quantiteSouhaitee) {
+		int quantiteAVendre=0;
+		if(nbProduit!=0 && this.produits[0].getNom().equals(produit)) {
+			
+			//arrêtez ici
+			
+		}
 	}
 
 	public int acheterProduit(int quantiteAcheter) {
@@ -57,9 +59,9 @@ public class Etal {
 	/**
 	 * 
 	 * @return donneesVente est un tableau de chaine contenant [0] : un boolean
-	 *         indiquant si l'Ã©tal est occupÃ© [1] : nom du vendeur [2] : produit
-	 *         vendu [2] : quantitÃ© de produit Ã  vendre au dÃ©but du marchÃ© [4] :
-	 *         quantitÃ© de produit vendu
+	 *         indiquant si l'étal est occupé [1] : nom du vendeur [2] : produit
+	 *         vendu [2] : quantité de produit à vendre au début du marché [4] :
+	 *         quantité de produit vendu
 	 */
 	public String[] etatEtal() {
 		String[] donneesVente = new String[5];
@@ -72,5 +74,4 @@ public class Etal {
 		}
 		return donneesVente;
 	}
-
 }
