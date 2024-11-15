@@ -15,6 +15,6 @@ public abstract class Produit implements IProduit {
 		return nom;
 	}
 	
-	protected abstract void decrireProduit();
+	public abstract String decrireProduit();
 }
 

@@ -12,8 +12,13 @@ public class Poisson extends Produit {
 	}
 	
 	@Override
-	protected void decrireProduit() {
-		System.out.println(nom+" pêché "+datePeche);
+	public String decrireProduit() {
+		return nom+" pï¿½chï¿½ "+datePeche;
+	}
+	
+	@Override
+	public int calculerPrix(int prix) {
+		return prix;
 	}
 }
 

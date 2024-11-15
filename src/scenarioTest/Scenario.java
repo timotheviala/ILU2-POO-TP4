@@ -2,15 +2,54 @@ package scenarioTest;
 
 import personnages.Gaulois;
 import produits.Poisson;
+import produits.Produit;
 import produits.Sanglier;
 import villagegaulois.Etal;
+import villagegaulois.IEtal;
+import villagegaulois.IVillage;
 
 public class Scenario {
 
 	public static void main(String[] args) {
 
 		// TODO Partie 4 : creer de la classe anonyme Village
-
+		IVillage village=new IVillage() {
+			private IEtal[] etals=new Etal[100];
+			int nbEtalOccupe=0;
+			
+			@Override
+			public <P extends Produit> boolean installerVendeur(IEtal<P> etal, Gaulois vendeur, P[] produit, int prix) {
+				if(nbEtalOccupe<100) {
+					etals[nbEtalOccupe]=etal;
+					etal.installerVendeur(vendeur, produit, prix);
+					nbEtalOccupe++;
+					return true;
+				}
+				return false;
+			}
+			
+			@Override
+			public void acheterProduit(String produit,int quantiteSouhaitee) {
+				int quantiteDispo;
+				int prixPaye=0;
+				for(int i=0;i<nbEtalOccupe;i++) {
+					if((quantiteDispo=(etals[i].contientProduit(produit, quantiteSouhaitee)))!=0) {
+							prixPaye=etals[i].acheterProduit(quantiteDispo);
+							quantiteSouhaitee-=quantiteDispo;
+							System.out.println("A l'étal n°"+(i+1)+",j'achète "+quantiteDispo+" "+produit+" et je paye "+prixPaye
+									+" sous.");
+					}
+				}
+			}
+			
+			@Override
+			public void afficherVillage() {
+				for(int i=0;i<nbEtalOccupe;i++) {
+					System.out.println(etals[i].etatEtal());
+				}
+			}
+		};
+	
 		// fin
 
 		Gaulois ordralfabetix = new Gaulois("Ordralfabétix", 9);
@@ -36,11 +75,11 @@ public class Scenario {
 		village.installerVendeur(etalSanglierObelix, obelix, sangliersObelix, 8);
 		village.installerVendeur(etalPoisson, ordralfabetix, poissons, 5);
 
-		System.out.println(village);
-
+		village.afficherVillage();
+		
 		village.acheterProduit("sanglier", 3);
 
-		System.out.println(village);
+		village.afficherVillage();
 	}
 
 }
